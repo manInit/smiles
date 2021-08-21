@@ -1,0 +1,9 @@
+.icon {
+  color: var(--primary-color);
+  font-size: 25px;
+  cursor: pointer;
+  padding: 5px;
+  &_delete {
+    color: var(--danger-color);
+  }
+}
