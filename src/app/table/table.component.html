@@ -21,6 +21,7 @@
     <div class="customTable__item customTable__item-icon">
       <ng-container *ngIf="!emoji.isDeleted; else restoreAction">
         <app-action-icon
+          *ngIf="isShowFavorite"
           [clickHandler]="loveHandler.bind(this, emoji)"
           [className]="'icon_star'"
           [icon]="emoji.isLove ? fasStar : faStar"
