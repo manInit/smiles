@@ -1,0 +1,34 @@
+.app {
+  display: flex;
+  height: 100%;
+  box-shadow: 0 0 6px 2px rgba(0, 0, 0, 0.5);
+  &__navbar {
+    width: 15%;
+    min-width: 200px;
+  }
+  &__content {
+    width: 85%;
+  }
+  &__header {
+    height: 65px;
+  }
+  &__table {
+    max-height: calc(100% - 65px);
+    overflow-y: auto;
+  }
+}
+@media screen and (max-width: 792px) {
+  .app {
+    flex-direction: column;
+    &__navbar {
+      width: 100%;
+      height: 65px;
+    }
+    &__content {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      max-height: calc(100% - 65px);
+    }
+  }
+}

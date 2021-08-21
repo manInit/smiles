@@ -1,0 +1,24 @@
+<div class="app">
+  <app-navbar
+    [menuItems]="menuItems"
+    class="app__navbar"
+  >
+  </app-navbar>
+  <div class="app__content">
+    <div class="app__header">
+      <app-header
+        [title]="title"
+        (inputSearchEvent)="updateSearch($event)"
+    ></app-header>
+    </div>
+    <div class="app__table">
+      <app-table
+        [titles]="['Имя', 'Ссылка', 'Превью', 'Действия']"
+        [emojis]="emojis"
+        [deleteHandler]="deleteHandler"
+        [loveHandler]="loveHandler"
+        [restoreHandler]="restoreHandler"
+    ></app-table>
+    </div>
+  </div>
+</div>
