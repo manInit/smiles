@@ -1,0 +1,42 @@
+<div class="customTable">
+  <div
+    *ngFor="let title of titles"
+    class="customTable__item customTable__item-head"
+  >
+    {{ title }}
+  </div>
+  <ng-container *ngFor="let emoji of emojis">
+    <div class="customTable__item">
+      {{ emoji.name }}
+    </div>
+    <div class="customTable__item">
+      {{ emoji.url }}
+    </div>
+    <div class="customTable__item">
+      <app-hover-img
+        [src]="emoji.url"
+        class="customTable__img"
+      ></app-hover-img>
+    </div>
+    <div class="customTable__item customTable__item-icon">
+      <ng-container *ngIf="!emoji.isDeleted; else restoreAction">
+        <app-action-icon
+          [clickHandler]="loveHandler.bind(this, emoji)"
+          [className]="'icon_star'"
+          [icon]="emoji.isLove ? fasStar : faStar"
+        ></app-action-icon>
+        <app-action-icon
+          [clickHandler]="deleteHandler.bind(this, emoji)"
+          [className]="'icon_delete'"
+          [icon]="faTimes"
+        ></app-action-icon>
+      </ng-container>
+      <ng-template #restoreAction>
+        <app-button
+          title="Восстановить"
+          [clickHandler]="restoreHandler.bind(this, emoji)"
+        ></app-button>
+      </ng-template>
+    </div>
+  </ng-container>
+</div>
