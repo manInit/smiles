@@ -1,0 +1,21 @@
+.hover-image {
+  &__preview {
+    width: 100%;
+    height: 100%;
+    &:hover ~ .hover-image__full {
+      height: auto;
+      padding: 1rem;
+      opacity: 1;
+    }
+  }
+  &__full {
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    opacity: 0;
+    position: fixed;
+    background: #fff;
+    box-shadow: 0 0 8px 0 rgba(34, 60, 80, 0.2);
+    transition: all 0.2s ease;
+  }
+}
