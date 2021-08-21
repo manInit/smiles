@@ -1,0 +1,29 @@
+.input {
+	position: relative;
+	&__label {
+		background: #fff;
+		padding: 0 5px;
+		position: absolute;
+		color: #999;
+		font-size: 18px;
+		pointer-events: none;
+		left: 10px;
+		top: 13px;
+		transition: 0.2s ease all;
+	}
+	&__field:focus ~ &__label, &__field:valid ~ &__label {
+		top: -7px;
+		font-size: 14px;
+		color: var(--primary-color);
+	}
+	&__field {
+		font-size: 16px;
+		padding: 10px;
+		display: block;
+		max-width: 300px;
+		border: 1px solid #ccc;
+		&:focus {
+  			outline: none;
+		}
+	}
+}
