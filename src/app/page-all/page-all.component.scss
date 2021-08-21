@@ -1,0 +1,17 @@
+.app {
+  display: flex;
+  height: 70vh;
+  &__navbar {
+    width: 15%;
+    min-width: 200px;
+  }
+  &__content {
+    width: 85%;
+  }
+  &__header {
+    height: 65px;
+  }
+  &__table {
+    max-height: calc(100% - 65px);
+  }
+}
