@@ -1,0 +1,16 @@
+<nav class="navbar">
+  <ul class="navbar__list">
+    <li
+      *ngFor="let menuItem of menuItems"
+      [class]="'navbar__item ' + (menuItem.isActive ? 'navbar__item-active' : '')"
+    >
+      <a
+        class="navbar__link"
+        [routerLink]="menuItem.link"
+        routerLinkActive="active"
+      >
+        {{ menuItem.title }}
+      </a>
+    </li>
+  </ul>
+</nav>
