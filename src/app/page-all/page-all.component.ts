@@ -34,6 +34,7 @@ export class PageAllComponent implements OnInit {
       this.loadUndeleteEmoji();
       return;
     }
+    this.stateEmojis = loadFromStorage();
     this.emojis = this.stateEmojis.filter(emoji => {
       return emoji.name.indexOf(this.searchValue) !== -1 && !emoji.isDeleted
     });
@@ -50,8 +51,8 @@ export class PageAllComponent implements OnInit {
   }
 
   loadUndeleteEmoji() {
-    const emojis: Emoji[] = loadFromStorage();
-    this.emojis = emojis.filter(item => !item.isDeleted);
+    this.stateEmojis = loadFromStorage();
+    this.emojis = this.stateEmojis.filter(item => !item.isDeleted);
   }
 
   fetchEmojis() {

@@ -33,6 +33,7 @@ export class PageLoveComponent implements OnInit {
       this.loadLoveEmoji();
       return;
     }
+    this.stateEmojis = loadFromStorage();
     this.emojis = this.stateEmojis.filter(emoji => {
       return emoji.name.indexOf(this.searchValue) !== -1 && emoji.isLove
     });

@@ -33,6 +33,7 @@ export class PageDeletedComponent implements OnInit {
       this.loadDeletedEmoji();
       return;
     }
+    this.stateEmojis = loadFromStorage();
     this.emojis = this.stateEmojis.filter(emoji => {
       return emoji.name.indexOf(this.searchValue) !== -1 && emoji.isDeleted
     });
