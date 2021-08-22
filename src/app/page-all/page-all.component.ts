@@ -4,6 +4,7 @@ import { Emoji } from '../interfaces/emoji';
 import { MenuItem } from '../interfaces/menuItem';
 import { menuItems, setActive } from '../menuItems';
 import { saveStateInStorage, loadFromStorage } from '../localstorage';
+import { setDeletedEmoji, toggleLoveEmoji } from '../emojiState';
 
 @Component({
   selector: 'app-page-all',
@@ -39,20 +40,18 @@ export class PageAllComponent implements OnInit {
   }
 
   deleteEmoji(emoji: Emoji) {
-    const activeEmoji = this.stateEmojis.find(item => emoji.name === item.name);
-    if (!activeEmoji) return;
-    activeEmoji.isDeleted = true;
-    activeEmoji.isLove = false;
-    saveStateInStorage(this.stateEmojis);
+    setDeletedEmoji(emoji);
     this.updateEmojis();
   }
 
   loveEmoji(emoji: Emoji) {
-    const activeEmoji = this.stateEmojis.find(item => emoji.name === item.name);
-    if (!activeEmoji) return;
-    activeEmoji.isLove = !activeEmoji.isLove;
-    saveStateInStorage(this.stateEmojis);
+    toggleLoveEmoji(emoji);
     this.updateEmojis();
+  }
+
+  loadUndeleteEmoji() {
+    const emojis: Emoji[] = loadFromStorage();
+    this.emojis = emojis.filter(item => !item.isDeleted);
   }
 
   fetchEmojis() {
@@ -82,10 +81,5 @@ export class PageAllComponent implements OnInit {
       saveStateInStorage(this.stateEmojis);
       this.loadUndeleteEmoji();
     });
-  }
-
-  loadUndeleteEmoji() {
-    const emojis: Emoji[] = loadFromStorage();
-    this.emojis = emojis.filter(item => !item.isDeleted);
   }
 }

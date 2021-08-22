@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Emoji } from '../interfaces/emoji';
 import { MenuItem } from '../interfaces/menuItem';
 import { menuItems, setActive } from '../menuItems';
-import { loadFromStorage, saveStateInStorage } from '../localstorage';
+import { loadFromStorage } from '../localstorage';
+import { setUnloveEmoji } from '../emojiState';
 
 @Component({
   selector: 'app-page-love',
@@ -37,25 +38,13 @@ export class PageLoveComponent implements OnInit {
     });
   }
 
-
   loadLoveEmoji() {
     this.stateEmojis = loadFromStorage();
     this.emojis = this.stateEmojis.filter(item => item.isLove && !item.isDeleted);
   }
 
   deleteEmoji(emoji: Emoji) {
-    const activeEmoji = this.stateEmojis.find(item => emoji.name === item.name);
-    if (!activeEmoji) return;
-    activeEmoji.isLove = false;
-    saveStateInStorage(this.stateEmojis);
-    this.updateEmojis();
-  }
-
-  loveEmoji(emoji: Emoji) {
-    const activeEmoji = this.stateEmojis.find(item => emoji.name === item.name);
-    if (!activeEmoji) return;
-    activeEmoji.isLove = !activeEmoji.isLove;
-    saveStateInStorage(this.stateEmojis);
+    setUnloveEmoji(emoji);
     this.updateEmojis();
   }
 }

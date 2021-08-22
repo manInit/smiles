@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Emoji } from '../interfaces/emoji';
 import { MenuItem } from '../interfaces/menuItem';
 import { menuItems, setActive } from '../menuItems';
-import { loadFromStorage, saveStateInStorage } from '../localstorage';
+import { loadFromStorage } from '../localstorage';
+import { restoreEmoji } from '../emojiState';
 
 @Component({
   selector: 'app-page-deleted',
@@ -42,28 +43,8 @@ export class PageDeletedComponent implements OnInit {
     this.emojis = this.stateEmojis.filter(item => item.isDeleted);
   }
 
-  deleteEmoji(emoji: Emoji) {
-    const activeEmoji = this.stateEmojis.find(item => emoji.name === item.name);
-    if (!activeEmoji) return;
-    activeEmoji.isDeleted = true;
-    activeEmoji.isLove = false;
-    saveStateInStorage(this.stateEmojis);
-    this.updateEmojis();
-  }
-
-  loveEmoji(emoji: Emoji) {
-    const activeEmoji = this.stateEmojis.find(item => emoji.name === item.name);
-    if (!activeEmoji) return;
-    activeEmoji.isLove = !activeEmoji.isLove;
-    saveStateInStorage(this.stateEmojis);
-    this.updateEmojis();
-  }
-
   restoreEmoji(emoji: Emoji) {
-    const activeEmoji = this.stateEmojis.find(item => emoji.name === item.name);
-    if (!activeEmoji) return;
-    activeEmoji.isDeleted = false;
-    saveStateInStorage(this.stateEmojis);
+    restoreEmoji(emoji);
     this.updateEmojis();
   }
 }
