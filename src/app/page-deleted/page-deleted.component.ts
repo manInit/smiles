@@ -12,7 +12,6 @@ import { restoreEmoji } from '../emojiState';
 })
 export class PageDeletedComponent implements OnInit {
   emojis: Emoji[] = []
-  stateEmojis: Emoji[] = []
   menuItems: MenuItem[] = menuItems
   searchValue: string = ''
 
@@ -33,15 +32,15 @@ export class PageDeletedComponent implements OnInit {
       this.loadDeletedEmoji();
       return;
     }
-    this.stateEmojis = loadFromStorage();
-    this.emojis = this.stateEmojis.filter(emoji => {
+    const stateEmojis: Emoji[] = loadFromStorage();
+    this.emojis = stateEmojis.filter(emoji => {
       return emoji.name.indexOf(this.searchValue) !== -1 && emoji.isDeleted
     });
   }
 
   loadDeletedEmoji() {
-    this.stateEmojis = loadFromStorage();
-    this.emojis = this.stateEmojis.filter(item => item.isDeleted);
+    const stateEmojis: Emoji[] = loadFromStorage();
+    this.emojis = stateEmojis.filter(item => item.isDeleted);
   }
 
   restoreEmoji(emoji: Emoji) {

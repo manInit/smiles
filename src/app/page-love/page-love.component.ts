@@ -12,7 +12,6 @@ import { setUnloveEmoji } from '../emojiState';
 })
 export class PageLoveComponent implements OnInit {
   emojis: Emoji[] = []
-  stateEmojis: Emoji[] = []
   menuItems: MenuItem[] = menuItems
   searchValue: string = ''
 
@@ -33,15 +32,15 @@ export class PageLoveComponent implements OnInit {
       this.loadLoveEmoji();
       return;
     }
-    this.stateEmojis = loadFromStorage();
-    this.emojis = this.stateEmojis.filter(emoji => {
+    const stateEmojis: Emoji[] = loadFromStorage();
+    this.emojis = stateEmojis.filter(emoji => {
       return emoji.name.indexOf(this.searchValue) !== -1 && emoji.isLove
     });
   }
 
   loadLoveEmoji() {
-    this.stateEmojis = loadFromStorage();
-    this.emojis = this.stateEmojis.filter(item => item.isLove && !item.isDeleted);
+    const stateEmojis: Emoji[] = loadFromStorage();
+    this.emojis = stateEmojis.filter(item => item.isLove && !item.isDeleted);
   }
 
   deleteEmoji(emoji: Emoji) {
