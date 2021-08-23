@@ -1,39 +1,69 @@
 import { Emoji } from './interfaces/emoji';
 import { saveStateInStorage, loadFromStorage } from './localstorage';
 
-export function setUnloveEmoji(emoji: Emoji) {
+interface Field {
+  name: string
+  value?: any
+  toggle: boolean
+}
+
+function changeEmojiState(emoji: Emoji, fields: Field[]) {
   const stateEmojis = loadFromStorage();
   const activeEmoji: Emoji | undefined = stateEmojis.find(item => emoji.name === item.name);
-  if (!activeEmoji) return;
+  if (!activeEmoji) {
+    throw new Error('Эмоджи не найден');
+  }
 
-  activeEmoji.isLove = false;
+  for (const field of fields) {
+    if (!(field.name in activeEmoji)) {
+      throw new Error('Неверное имя поля');
+    }
+    if (field.toggle) {
+      activeEmoji[field.name] = !activeEmoji[field.name];
+    } else {
+      activeEmoji[field.name] = field.value;
+    }
+  }
+  
   saveStateInStorage(stateEmojis);
+}
+
+export function setUnloveEmoji(emoji: Emoji) {
+  const field: Field = {
+    name: 'isLove',
+    value: false,
+    toggle: false
+  }
+  changeEmojiState(emoji, [field]);
 }
 
 export function setDeletedEmoji(emoji: Emoji) {
-  const stateEmojis = loadFromStorage();
-  const activeEmoji: Emoji | undefined = stateEmojis.find(item => emoji.name === item.name);
-  if (!activeEmoji) return;
-
-  activeEmoji.isDeleted = true;
-  activeEmoji.isLove = false;
-  saveStateInStorage(stateEmojis);
+  const field1: Field = {
+    name: 'isLove',
+    value: false,
+    toggle: false
+  }
+  const field2: Field = {
+    name: 'isDeleted',
+    value: true,
+    toggle: false
+  }
+  changeEmojiState(emoji, [field1, field2]);
 }
 
 export function toggleLoveEmoji(emoji: Emoji) {
-  const stateEmojis = loadFromStorage();
-  const activeEmoji: Emoji | undefined = stateEmojis.find(item => emoji.name === item.name);
-  if (!activeEmoji) return;
-
-  activeEmoji.isLove = !activeEmoji.isLove;
-  saveStateInStorage(stateEmojis);
+  const field: Field = {
+    name: 'isLove',
+    toggle: true
+  }
+  changeEmojiState(emoji, [field]);
 }
 
 export function restoreEmoji(emoji: Emoji) {
-  const stateEmojis = loadFromStorage();
-  const activeEmoji = stateEmojis.find(item => emoji.name === item.name);
-  if (!activeEmoji) return;
-
-  activeEmoji.isDeleted = false;
-  saveStateInStorage(stateEmojis);
+  const field: Field = {
+    name: 'isDeleted',
+    value: false,
+    toggle: false
+  }
+  changeEmojiState(emoji, [field]);
 }

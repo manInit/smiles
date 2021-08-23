@@ -3,4 +3,5 @@ export interface Emoji {
   url: string
   isLove: boolean
   isDeleted: boolean
+  [key: string]: string | boolean
 }
