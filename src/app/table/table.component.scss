@@ -1,8 +1,9 @@
 $borderColor: #C4C4C4;
 
 .customTable {
-  width: 100%;
   max-width: 100%;
+  min-width: 650px;
+  overflow-x: auto;
   max-height: 100%;
   display: grid;
   grid-template-columns: 1fr 4fr 1fr 2fr;
