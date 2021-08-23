@@ -13,7 +13,6 @@ import { setDeletedEmoji, toggleLoveEmoji, searchEmojiByName } from '../emojiSta
 })
 export class PageAllComponent implements OnInit {
   emojis: Emoji[] = []
-  stateEmojis: Emoji[] = []
   menuItems: MenuItem[] = menuItems
   searchValue: string = ''
 
@@ -45,7 +44,7 @@ export class PageAllComponent implements OnInit {
 
   fetchEmojis() {
     const state: Emoji[] = loadFromStorage();
-    this.stateEmojis = [];
+    const stateEmojis: Emoji[] = [];
 
     this.pageAllService.fetchEmojis().subscribe((data: any) => {
       let count = 0;
@@ -58,7 +57,7 @@ export class PageAllComponent implements OnInit {
           isDeleted = emojiInState.isDeleted;
         }
 
-        this.stateEmojis.push({
+        stateEmojis.push({
           name,
           url: data[name],
           isLove,
@@ -67,7 +66,7 @@ export class PageAllComponent implements OnInit {
         count++;
         if (count > 200) break;
       }
-      saveStateInStorage(this.stateEmojis);
+      saveStateInStorage(stateEmojis);
       this.updateEmojis();
     });
   }
