@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Emoji } from '../interfaces/emoji';
 import { MenuItem } from '../interfaces/menuItem';
-import { menuItems, setActive } from '../menuItems';
+import { menuItems, setActiveMenuItem } from '../menuItems';
 import { loadFromStorage } from '../localstorage';
 import { setUnloveEmoji } from '../emojiState';
 
@@ -18,7 +18,7 @@ export class PageLoveComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    setActive('Любимые');
+    setActiveMenuItem('Любимые');
     this.loadLoveEmoji();
   }
 

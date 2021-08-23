@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PageAllService } from './page-all.service';
 import { Emoji } from '../interfaces/emoji';
 import { MenuItem } from '../interfaces/menuItem';
-import { menuItems, setActive } from '../menuItems';
+import { menuItems, setActiveMenuItem } from '../menuItems';
 import { saveStateInStorage, loadFromStorage } from '../localstorage';
 import { setDeletedEmoji, toggleLoveEmoji } from '../emojiState';
 
@@ -20,7 +20,7 @@ export class PageAllComponent implements OnInit {
   constructor(private pageAllService: PageAllService) { }
 
   ngOnInit(): void {
-    setActive('Все');
+    setActiveMenuItem('Все');
     this.fetchEmojis();
   }
 

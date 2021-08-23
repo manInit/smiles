@@ -18,7 +18,7 @@ export const menuItems: MenuItem[] = [
   }
 ];
 
-export function setActive(name: string) {
+export function setActiveMenuItem(name: string) {
   menuItems.forEach(item => item.isActive = false);
 
   const activeItem = menuItems.find(item => item.title === name);
