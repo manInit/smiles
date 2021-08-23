@@ -17,7 +17,7 @@ export class TableComponent implements OnInit {
   @Input() loveHandler!: Function
   @Input() restoreHandler!: Function
 
-  isShowFavorite: boolean = !(this.router.url === '/love')
+  isShowFavorite: boolean = this.router.url !== '/love'
   faStar: IconDefinition = faStar
   fasStar: IconDefinition = fasStar
   faTimes: IconDefinition = faTimes
