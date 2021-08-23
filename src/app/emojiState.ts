@@ -8,7 +8,7 @@ interface Field {
 }
 
 function changeEmojiState(emoji: Emoji, fields: Field[]) {
-  const stateEmojis = loadFromStorage();
+  const stateEmojis: Emoji[] = loadFromStorage();
   const activeEmoji: Emoji | undefined = stateEmojis.find(item => emoji.name === item.name);
   if (!activeEmoji) {
     throw new Error('Эмоджи не найден');
@@ -26,6 +26,19 @@ function changeEmojiState(emoji: Emoji, fields: Field[]) {
   }
   
   saveStateInStorage(stateEmojis);
+}
+
+export function searchEmojiByName(searchQuery: string) {
+  const stateEmojis: Emoji[] = loadFromStorage();
+  if (searchQuery === '') return stateEmojis;
+  
+  return stateEmojis
+    .filter(emoji => emoji.name.indexOf(searchQuery) !== -1)
+    .sort((firstEmoji, secondEmoji) => {
+      const firstLargerSecond: boolean = (firstEmoji.name.indexOf(searchQuery) > 
+        secondEmoji.name.indexOf(searchQuery));
+      return firstLargerSecond ? 1 : -1;
+    });
 }
 
 export function setUnloveEmoji(emoji: Emoji) {

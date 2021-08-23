@@ -4,7 +4,7 @@ import { Emoji } from '../interfaces/emoji';
 import { MenuItem } from '../interfaces/menuItem';
 import { menuItems, setActiveMenuItem } from '../menuItems';
 import { saveStateInStorage, loadFromStorage } from '../localstorage';
-import { setDeletedEmoji, toggleLoveEmoji } from '../emojiState';
+import { setDeletedEmoji, toggleLoveEmoji, searchEmojiByName } from '../emojiState';
 
 @Component({
   selector: 'app-page-all',
@@ -24,24 +24,13 @@ export class PageAllComponent implements OnInit {
     this.fetchEmojis();
   }
 
+  updateEmojis() {
+    this.emojis = searchEmojiByName(this.searchValue).filter(emoji => !emoji.isDeleted);
+  }
+
   updateSearch(searchQuery: string) {
     this.searchValue = searchQuery;
     this.updateEmojis();
-  }
-
-  updateEmojis() {
-    if (this.searchValue === '') {
-      this.loadUndeleteEmoji();
-      return;
-    }
-    this.stateEmojis = loadFromStorage();
-    this.emojis = this.stateEmojis.filter(emoji => {
-      return emoji.name.indexOf(this.searchValue) !== -1 && !emoji.isDeleted;
-    }).sort((firstEmoji, secondEmoji) => {
-      const firstLargerSecond: boolean = (firstEmoji.name.indexOf(this.searchValue) > 
-        secondEmoji.name.indexOf(this.searchValue));
-      return firstLargerSecond ? 1 : -1;
-    });
   }
 
   deleteEmoji(emoji: Emoji) {
@@ -52,11 +41,6 @@ export class PageAllComponent implements OnInit {
   loveEmoji(emoji: Emoji) {
     toggleLoveEmoji(emoji);
     this.updateEmojis();
-  }
-
-  loadUndeleteEmoji() {
-    this.stateEmojis = loadFromStorage();
-    this.emojis = this.stateEmojis.filter(item => !item.isDeleted);
   }
 
   fetchEmojis() {
@@ -84,7 +68,7 @@ export class PageAllComponent implements OnInit {
         if (count > 200) break;
       }
       saveStateInStorage(this.stateEmojis);
-      this.loadUndeleteEmoji();
+      this.updateEmojis();
     });
   }
 }
