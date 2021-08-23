@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Output, EventEmitter } from '@angular/core';
 
 @Component({
@@ -7,6 +7,7 @@ import { Output, EventEmitter } from '@angular/core';
   styleUrls: ['./input.component.scss']
 })
 export class InputComponent implements OnInit {
+  @Input() labelText!: string
   @Output() inputSearchEvent = new EventEmitter<string>();
 
   constructor() { }
