@@ -28,18 +28,6 @@ function changeEmojiState(emoji: Emoji, fields: Field[]) {
   saveStateInStorage(stateEmojis);
 }
 
-export function searchEmojiByName(searchQuery: string) {
-  const stateEmojis: Emoji[] = loadFromStorage();
-  if (searchQuery === '') return stateEmojis;
-  
-  return stateEmojis
-    .filter(emoji => emoji.name.indexOf(searchQuery) !== -1)
-    .sort((firstEmoji, secondEmoji) => {
-      const firstLargerSecond: boolean = (firstEmoji.name.indexOf(searchQuery) > 
-        secondEmoji.name.indexOf(searchQuery));
-      return firstLargerSecond ? 1 : -1;
-    });
-}
 
 export function setUnloveEmoji(emoji: Emoji) {
   const field: Field = {
@@ -79,4 +67,15 @@ export function restoreEmoji(emoji: Emoji) {
     toggle: false
   }
   changeEmojiState(emoji, [field]);
+}
+
+export function searchEmojiByName(searchQuery: string) {
+  const stateEmojis: Emoji[] = loadFromStorage();
+  if (searchQuery === '') return stateEmojis;
+  
+  return stateEmojis
+    .filter(emoji => emoji.name.indexOf(searchQuery) !== -1)
+    .sort(({ name: name1 }, { name: name2 }) => {
+      return name1.indexOf(searchQuery) - name2.indexOf(searchQuery) || name1.length - name2.length
+    });
 }
