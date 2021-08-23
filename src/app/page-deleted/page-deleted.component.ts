@@ -35,6 +35,10 @@ export class PageDeletedComponent implements OnInit {
     const stateEmojis: Emoji[] = loadFromStorage();
     this.emojis = stateEmojis.filter(emoji => {
       return emoji.name.indexOf(this.searchValue) !== -1 && emoji.isDeleted
+    }).sort((firstEmoji, secondEmoji) => {
+      const firstLargerSecond: boolean = (firstEmoji.name.indexOf(this.searchValue) > 
+        secondEmoji.name.indexOf(this.searchValue));
+      return firstLargerSecond ? 1 : -1;
     });
   }
 
